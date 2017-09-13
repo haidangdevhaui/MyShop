@@ -20,4 +20,17 @@ class ValidationApi
 			'id' => 'required'
 		]);
 	}
+
+	/**
+	 * validation for action login
+	 * @param  array  $data formData
+	 * @return Validator
+	 */
+	public static function validateLogin(array $data)
+	{
+		return Validator::make($data, [
+			'email' => 'required|email',
+			'password' => 'required|min:8'
+		]);
+	}
 }

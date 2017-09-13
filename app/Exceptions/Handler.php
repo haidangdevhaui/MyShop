@@ -3,7 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Helpers\ResponseApi;
+use App\Helpers\ResponseCode;
 
 class Handler extends ExceptionHandler
 {
@@ -49,5 +52,16 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    /**
+     * unauthenticated
+     * @param  Request $request
+     * @param  AuthenticationException $exception
+     * @return json
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return ResponseApi::error(ResponseCode::CODE_AUTH_ERROR, 'You have not...');
     }
 }
