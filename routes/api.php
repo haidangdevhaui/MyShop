@@ -29,7 +29,7 @@ Route::prefix('v1')->group(function () {
 	/**
 	 * auth require api
 	 */
-	Route::middleware('jwt.auth')->group(function () {
+	Route::middleware('jwt.api')->group(function () {
 		Route::get('/user', function (Request $req) {
 			return $req->user();
 		});
