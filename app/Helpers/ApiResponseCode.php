@@ -1,7 +1,7 @@
 <?php
 namespace App\Helpers;
 
-class ResponseCode
+class ApiResponseCode
 {
 
     const CODE_SUCCESS               = 1;

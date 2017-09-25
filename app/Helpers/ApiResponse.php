@@ -1,10 +1,10 @@
 <?php
 namespace App\Helpers;
 
-use App\Helpers\ResponseCode;
+use App\Helpers\ApiResponseCode;
 use Response;
 
-class ResponseApi
+class ApiResponse
 {
 
     /**

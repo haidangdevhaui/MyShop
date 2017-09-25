@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware(['param.validate.api'])->group(function () {
 	Route::get('test/success', 'Api\TestController@success');
 	Route::get('test/error', 'Api\TestController@error');
 	Route::get('test/param', 'Api\TestController@param');
@@ -22,8 +22,8 @@ Route::prefix('v1')->group(function () {
 	 * auth api
 	 */
 	Route::prefix('auth')->group(function () {
-		Route::post('login', 'Api\AuthenticateController@login');
-		Route::post('register', 'Api\AuthenticateController@register');
+		Route::post('login', 'Api\AuthenticateController@login')->name('auth_login');
+		Route::post('register', 'Api\AuthenticateController@register')->name('auth_register');
 	});
 
 	/**

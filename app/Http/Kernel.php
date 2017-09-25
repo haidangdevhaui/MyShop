@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'jwt.auth' => Tymon\JWTAuth\MiddlewareGetUserFromToken::class,
         'jwt.refresh' => TymonJWTAuth\MiddlewareRefreshToken::class,
         'jwt.api' => \App\Http\Middleware\ApiMidlleware::class,
+        'param.validate.api' => \App\Http\Middleware\ApiValidationParamMiddleware::class,
     ];
 }
