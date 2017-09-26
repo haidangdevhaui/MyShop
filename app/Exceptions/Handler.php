@@ -5,8 +5,10 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use App\Helpers\ResponseApi;
-use App\Helpers\ResponseCode;
+use App\Helpers\ApiResponse as Response;
+use App\Helpers\ApiResponseCode as Code;
+use App\Helpers\Message;
+use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
 {
@@ -51,7 +53,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        Log::useDailyFiles(storage_path().'/logs/api');
+        Log::error($exception->getMessage());
+        return Response::error(Code::CODE_SERVER_INTERNAL_ERROR, Message::ERROR_SERVER_INTERNAL);
+        // return parent::render($request, $exception);
     }
 
     /**
@@ -62,6 +67,6 @@ class Handler extends ExceptionHandler
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        return ResponseApi::error(ResponseCode::CODE_AUTH_ERROR, 'You have not...');
+        return Response::error(Code::CODE_AUTH_ERROR, 'You have not...');
     }
 }

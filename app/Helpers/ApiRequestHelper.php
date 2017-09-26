@@ -3,7 +3,7 @@ namespace App\Helpers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Valivator;
+use Validator;
 
 class ApiRequestHelper
 {
@@ -12,13 +12,15 @@ class ApiRequestHelper
     protected $routeName;
     protected $params;
     protected $isLog;
+    protected $rule;
 
     public function __construct(Request $request)
     {
         $this->prefix    = 'api';
         $this->path      = $request->route()->getPrefix();
-        $this->routeName = $request->route()->getAction('as');
-        $this->params    = $request->only($this->getListParams());
+        $this->routeName = $this->getRouteName($request);
+        $this->rule      = $this->getValidationRules();
+        $this->params    = $request->input();
         $this->isLog     = true;
     }
 
@@ -41,24 +43,25 @@ class ApiRequestHelper
      */
     public function validate()
     {
-        $result = (object) [
-            'error'       => false
-        ];
-        $validator = Validator::make($this->params, $this->getValidationRules());
-        if ($validator->fails()) {
+        $validator = Validator::make($this->params, $this->rule);
+        if ($validator->fails() || $this->isRedundancedParam()) {
             $this->isLog ? Log::error($validator->errors()) : '';
-            $result->error = true;
+            return false;
         }
-        return $result;
+        return true;
     }
 
     /**
-     * get list params
-     * @return array
+     * check redundanced param
+     * @return bool
      */
-    protected function getListParams()
+    protected function isRedundancedParam()
     {
-        return array_keys($this->getValidationRules());
+        return (Bool) count(
+            array_diff(
+                array_keys($this->params), $this->getParamsAccepted()
+            )
+        );
     }
 
     /**
@@ -67,18 +70,36 @@ class ApiRequestHelper
      */
     protected function getValidationRules()
     {
-        return array_filter(config('rule.' . $this->routeName), function($item) {
-            return $item != 'optional';
-        });
+        if ($rule = config('rule.' . $this->routeName)) {
+            return array_filter($rule, function ($item) {
+                return $item != 'optional';
+            });
+        }
+        return [];
     }
 
     /**
-     * get protected method
-     * @param  $key
+     * get list params accepted
+     * @return array
+     */
+    protected function getParamsAccepted()
+    {
+        if ($params = config('rule.' . $this->routeName)) {
+            return array_keys($params);
+        }
+        return [];
+    }
+
+    /**
+     * get route name
      * @return string
      */
-    public function __get($key)
+    protected function getRouteName(Request $request) 
     {
-        return $this->$key;
+        $route = $request->route()->getAction('as');
+        if (is_string($route)) {
+            return $route;
+        }
     }
+
 }

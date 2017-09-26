@@ -4,6 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Helpers\ApiRequestHelper;
+use App\Helpers\ApiResponseCode;
+use App\Helpers\ApiResponse;
+use App\Helpers\Message;
 
 class ApiValidationParamMiddleware
 {
@@ -17,8 +20,8 @@ class ApiValidationParamMiddleware
     public function handle($request, Closure $next)
     {
         $api = new ApiRequestHelper($request);
-        if ($api->isApiPrefix()) {
-            $validator = $api->validate();
+        if ($api->isApiPrefix() && !$api->validate()) {
+            return ApiResponse::error(ApiResponseCode::CODE_PARAMETER_INVALID, Message::ERROR_PARAM_INVALID);
         }
         return $next($request);
     }

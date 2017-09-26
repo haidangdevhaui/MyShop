@@ -1,7 +1,7 @@
 <?php
 namespace App\Helpers;
 
-use App\Helpers\ApiResponseCode;
+use App\Helpers\ApiResponseCode as Code;
 use Response;
 
 class ApiResponse
@@ -14,7 +14,7 @@ class ApiResponse
      */
     public static function success(array $data = [])
     {
-        $response = ['success' => ResponseCode::CODE_SUCCESS];
+        $response = ['success' => Code::CODE_SUCCESS];
         if ($data) {
             $response['data'] = $data;
         }

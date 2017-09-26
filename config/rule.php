@@ -8,7 +8,6 @@ return [
     'auth_login'    => [
         'email'    => 'required|email',
         'password' => 'required|min:8',
-        'test'     => 'optional',
     ],
     'auth_register' => [
         'full_name' => 'required',
