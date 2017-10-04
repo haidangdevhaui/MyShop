@@ -11,27 +11,52 @@ use Illuminate\Http\Request;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 Route::prefix('v1')->middleware(['param.validate.api'])->group(function () {
-	Route::get('test/success', 'Api\TestController@success');
-	Route::get('test/error', 'Api\TestController@error');
-	Route::get('test/param', 'Api\TestController@param');
+    /**
+     * product category api
+     */
+    Route::prefix('category')->group(function () {
+        Route::get('/', 'Api\ProductCategoryController@index')->name('fetch_product_category');
+        Route::get('/child', 'Api\ProductCategoryController@child')->name('fetch_child_product_category');
+    });
 
-	/**
-	 * auth api
-	 */
-	Route::prefix('auth')->group(function () {
-		Route::post('login', 'Api\AuthenticateController@login')->name('auth_login');
-		Route::post('register', 'Api\AuthenticateController@register')->name('auth_register');
-	});
+    /**
+     * product api
+     */
+    Route::prefix('product')->group(function () {
 
-	/**
-	 * auth require api
-	 */
-	Route::middleware('jwt.api')->group(function () {
-		Route::get('/user', function (Request $req) {
-			return $req->user();
-		});
-	});
+    });
+
+    /**
+     * mall api
+     */
+    Route::prefix('mall')->group(function () {
+        Route::get('/', 'Api\MallController@index')->name('fetch_mall');
+    });
+
+    /**
+     * sale api
+     */
+    Route::prefix('sale')->group(function () {
+        
+    });
+
+    /**
+     * auth api
+     */
+    Route::prefix('auth')->group(function () {
+        Route::post('login', 'Api\AuthenticateController@login')->name('auth_login');
+        Route::post('register', 'Api\AuthenticateController@register')->name('auth_register');
+    });
+
+    /**
+     * auth require api
+     */
+    Route::middleware('jwt.api')->group(function () {
+        Route::get('/user', function (Request $req) {
+            return $req->user();
+        });
+    });
 });

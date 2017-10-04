@@ -12,7 +12,7 @@ class ApiResponse
      * @param  array $data
      * @return json
      */
-    public static function success(array $data = [])
+    public static function success($data = [])
     {
         $response = ['success' => Code::CODE_SUCCESS];
         if ($data) {

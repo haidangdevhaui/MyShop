@@ -8,6 +8,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use App\Helpers\ApiResponse as Response;
 use App\Helpers\ApiResponseCode as Code;
 use App\Helpers\Message;
+use App\Helpers\ApiRequestHelper;
 use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
@@ -53,10 +54,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        Log::useDailyFiles(storage_path().'/logs/api');
-        Log::error($exception->getMessage());
-        return Response::error(Code::CODE_SERVER_INTERNAL_ERROR, Message::ERROR_SERVER_INTERNAL);
-        // return parent::render($request, $exception);
+        if ((new ApiRequestHelper($request))->isApiPrefix()) {
+            Log::useDailyFiles(storage_path().'/logs/api');
+            Log::error($exception->getMessage());
+            return Response::error(Code::CODE_SERVER_INTERNAL_ERROR, Message::ERROR_SERVER_INTERNAL);
+        }
+        return parent::render($request, $exception);
     }
 
     /**
