@@ -22,6 +22,7 @@ class MallController extends Api
      */
     public function index(Request $req)
     {
-        return Response::success($this->Mall->getList());
+        $this->loadModel('Config');
+        return Response::success($this->Mall->getList($this->Config->getMallLimit()));
     }
 }

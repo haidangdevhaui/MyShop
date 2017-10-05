@@ -19,6 +19,10 @@ trait ApiTrait
                 $alias = '\App\Models\\';
                 break;
 
+            case 'loadRepo':
+                $alias = '\App\Repositories\\';
+                break;
+
             case 'loadHelper':
                 $alias = '\App\Helpers\\';
                 break;

@@ -13,7 +13,7 @@ class ProductCategoryController extends Api
      */
     public function __construct()
     {
-        $this->loadModel('ProductCategory');
+        $this->loadRepo('ProductCategoryRepository');
     }
 
     /**
@@ -22,7 +22,7 @@ class ProductCategoryController extends Api
      */
     public function index(Request $req)
     {
-        return Response::success($this->ProductCategory->getList());
+        return Response::success($this->ProductCategoryRepository->getList());
     }
 
     /**

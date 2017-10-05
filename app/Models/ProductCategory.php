@@ -15,7 +15,7 @@ class ProductCategory extends Model
      */
     public function getList()
     {
-        return $this->select('id', 'name', 'image')->orderBy('id', 'desc')->get();
+        return $this->select('id', 'name', 'image')->orderBy('id', 'asc')->get();
     }
 
     /**
