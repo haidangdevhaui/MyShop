@@ -1,38 +1,53 @@
 <?php
 namespace App\Traits;
 
+use App\Exceptions\ApiException;
+
 trait ApiTrait
 {
 
     /**
-     * dependency injection class
-     * @param  string $className class name
-     * @return void
+     * load model instance
+     * @param  string $className
+     * @return mixed
      */
-    public function __call($name, $arguments)
+    public function loadModel($className)
     {
-        if (!count($arguments)) {
-            return false;
-        }
-        switch ($name) {
-            case 'loadModel':
-                $alias = '\App\Models\\';
-                break;
+        return $this->instance($className, 'App\Models\\');
+    }
 
-            case 'loadRepo':
-                $alias = '\App\Repositories\\';
-                break;
+    /**
+     * load repository instance
+     * @param  string $className
+     * @return mixed
+     */
+    public function loadRepo($className)
+    {
+        return $this->instance($className, 'App\Repositories\\');
+    }
 
-            case 'loadHelper':
-                $alias = '\App\Helpers\\';
-                break;
+    /**
+     * load helper instance
+     * @param  string $className
+     * @return mixed
+     */
+    public function loadHelper($className)
+    {
+        return $this->instance($className, 'App\Helpers\\');
+    }
 
-            default:
-                return false;
-                break;
-        }
-        $className        = $arguments[0];
+    /**
+     * get instance of class
+     * @param  string $className
+     * @param  string $alias
+     * @return mixed
+     */
+    private function instance($className, $alias)
+    {
         $class            = $alias . $className;
+        if (!class_exists($class)) {
+            throw new ApiException("Class {$class} not exist" , 1);
+        }
         $this->$className = new $class;
     }
 }
