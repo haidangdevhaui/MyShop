@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Repositories;
 
-use Illuminate\Container\Container as App;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel as Model;
 
 /**
  * Class Repository
@@ -10,12 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 abstract class AbstractRepository
 {
-
-    /**
-     * @var App
-     */
-    private $app;
-
     /**
      * @var
      */
@@ -24,10 +18,9 @@ abstract class AbstractRepository
     /**
      * @param App $app
      */
-    public function __construct()
+    public function __construct(Model $model)
     {
-        $this->app = new App;
-        $this->makeModel();
+        $this->model = $model;
     }
 
     /**
@@ -97,33 +90,5 @@ abstract class AbstractRepository
     public function findBy($attribute, $value, $columns = array('*'))
     {
         return $this->model->where($attribute, '=', $value)->first($columns);
-    }
-
-    /**
-     * get model class name
-     * @return [type] [description]
-     */
-    private function model()
-    {
-        if ($this->model) {
-            return $this->model;
-        }
-        $nameSpace = explode('\\', get_called_class());
-        return 'App\Models\\'.str_replace('Repository', '', $nameSpace[count($nameSpace) - 1]);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     * @throws RepositoryException
-     */
-    public function makeModel()
-    {
-        $model = $this->app->make($this->model());
-
-        if (!$model instanceof Model) {
-            throw new RepositoryException("Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
-        }
-
-        return $this->model = new $model;
     }
 }

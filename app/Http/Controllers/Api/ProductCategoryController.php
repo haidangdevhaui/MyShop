@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\ApiResponse as Response;
 use App\Http\Controllers\ApiController as Api;
 use Illuminate\Http\Request;
+use App\Repositories\Contracts\ProductCategoryInterface;
 
 class ProductCategoryController extends Api
 {
@@ -13,7 +14,7 @@ class ProductCategoryController extends Api
      */
     public function __construct()
     {
-        $this->loadRepo('ProductCategoryRepository');
+        $this->loadRepository('ProductCategory');
     }
 
     /**
@@ -22,7 +23,7 @@ class ProductCategoryController extends Api
      */
     public function index(Request $req)
     {
-        return Response::success($this->ProductCategoryRepository->getList());
+        return Response::success($this->ProductCategory->getList());
     }
 
     /**

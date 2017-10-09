@@ -1,8 +1,18 @@
 <?php
+
 namespace App\Repositories;
+
+use App\Models\ProductCategory;
+use App\Repositories\Contracts\ProductCategoryInterface;
 
 class ProductCategoryRepository extends AbstractRepository implements ProductCategoryInterface
 {
+
+    public function __construct(ProductCategory $product)
+    {
+        $this->model = $product;
+    }
+
 	/**
      * get list product category
      * @return array

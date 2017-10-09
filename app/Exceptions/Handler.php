@@ -54,10 +54,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ((new ApiRequestHelper($request))->isApiPrefix()) {
-            Log::useDailyFiles(storage_path().'/logs/api');
-            Log::error($exception);
-            return Response::error(Code::CODE_SERVER_INTERNAL_ERROR, Message::ERROR_SERVER_INTERNAL);
+        if (env('API_DEBUG')) {
+            if ((new ApiRequestHelper($request))->isApiPrefix()) {
+                Log::useDailyFiles(storage_path().'/logs/api');
+                Log::error($exception);
+                return Response::error(Code::CODE_SERVER_INTERNAL_ERROR, Message::ERROR_SERVER_INTERNAL);
+            }
         }
         return parent::render($request, $exception);
     }

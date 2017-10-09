@@ -2,9 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Sale extends Model
+class Sale extends BaseModel
 {
-    //
+	/**
+	 * get flash sale
+	 * @param integer $limit
+	 * @return array
+	 */
+    public function getFlashSale($limit)
+    {
+    	
+    }
 }
