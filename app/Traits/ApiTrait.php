@@ -2,7 +2,7 @@
 namespace App\Traits;
 
 use App\Exceptions\ApiException;
-use App\Repositories\RepositoryException;
+use App\Exceptions\RepositoryException;
 
 trait ApiTrait
 {
