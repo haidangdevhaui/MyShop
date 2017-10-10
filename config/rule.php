@@ -3,6 +3,7 @@
 /**
  * defined validation rule
  * document https://laravel.com/docs/5.5/validation
+ * param_name => rule||optional
  */
 return [
     'auth_login' => [
@@ -16,5 +17,8 @@ return [
     ],
     'fetch_child_product_category' => [
         'parent_id' => 'required'
+    ],
+    'fetch_flash_sale' => [
+        'limit' => 'integer'
     ]
 ];

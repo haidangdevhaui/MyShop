@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories;
+namespace App\Exceptions;
 
 class RepositoryException extends \Exception
 {

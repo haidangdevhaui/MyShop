@@ -40,7 +40,7 @@ Route::prefix('v1')->middleware(['param.validate.api'])->group(function () {
      * sale api
      */
     Route::prefix('sale')->group(function () {
-        
+        Route::get('/', 'Api\SaleController@index')->name('fetch_flash_sale');
     });
 
     /**

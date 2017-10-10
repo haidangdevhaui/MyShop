@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class Config extends BaseModel
+use Illuminate\Database\Eloquent\Model;
+
+class Config extends Model
 {
     public $timestamp = false;
 

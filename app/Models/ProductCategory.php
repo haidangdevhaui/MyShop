@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class ProductCategory extends BaseModel
+class ProductCategory extends AbstractModel
 {
     /**
      * get list product category

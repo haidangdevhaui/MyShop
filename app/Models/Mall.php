@@ -2,13 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Mall extends Model
+class Mall extends AbstractModel
 {
-    use SoftDeletes;
-
     /**
      * get list product category
      * @param string $limit

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Sale extends BaseModel
+class Sale extends AbstractModel
 {
 	/**
 	 * get flash sale

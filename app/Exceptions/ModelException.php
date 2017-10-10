@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-class ApiException extends \Exception
+class ModelException extends \Exception
 {
 	
 }

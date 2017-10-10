@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\BaseModel as Model;
+use App\Models\AbstractModel as Model;
 
 /**
  * Class Repository
