@@ -9,31 +9,22 @@ trait ApiTrait
 
     /**
      * load model instance
-     * @param  string $className
+     * @param  string|array $className
      * @return mixed
      */
-    public function loadModel($className)
+    final public function loadModel()
     {
-        return $this->instance($className, 'App\Models\\');
+        return $this->map('App\Models\\', func_get_args(), 'instanceClass');
     }
 
     /**
      * load repository instance
-     * @param  string $className
+     * @param  string|array $className
      * @return mixed
      */
-    public function loadRepository()
+    final public function loadRepository()
     {
-        $args = func_get_args();
-        foreach ($args as $arg) {
-            if (is_array($arg)) {
-                foreach ($arg as $item) {
-                    return $this->instanceRepo($item, 'App\Repositories\\');
-                }
-            } else {
-                return $this->instanceRepo($arg, 'App\Repositories\\');
-            }
-        }
+        return $this->map('App\Repositories\\', func_get_args(), 'instanceRepo');
     }
 
     /**
@@ -41,9 +32,29 @@ trait ApiTrait
      * @param  string $className
      * @return mixed
      */
-    public function loadHelper($className)
+    final public function loadHelper($className)
     {
-        return $this->instance($className, 'App\Helpers\\');
+        return $this->map('App\Helpers\\', func_get_args(), 'instanceClass');
+    }
+
+    /**
+     * mapping param to instance
+     * @param  string $alias
+     * @param  array $param
+     * @param  string $callback
+     * @return mixed
+     */
+    final private function map($alias, $param, $callback)
+    {
+        foreach ($param as $arg) {
+            if (is_array($arg)) {
+                foreach ($arg as $item) {
+                    $this->$callback($item, $alias);
+                }
+            } else {
+                $this->$callback($arg, $alias);
+            }
+        }
     }
 
     /**
@@ -52,7 +63,7 @@ trait ApiTrait
      * @param  string $alias
      * @return mixed
      */
-    private function instance($className, $alias, $ext = '')
+    final private function instanceClass($className, $alias, $ext = '')
     {
         $class            = $alias . $className . $ext;
         if (!class_exists($class)) {
@@ -67,7 +78,7 @@ trait ApiTrait
      * @param  string $alias
      * @return mixed
      */
-    private function instanceRepo($className, $alias)
+    final private function instanceRepo($className, $alias)
     {
         $class            = $alias . $className . 'Repository';
         if (!class_exists($class)) {
