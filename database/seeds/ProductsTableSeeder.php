@@ -17,11 +17,13 @@ class ProductsTableSeeder extends Seeder
         $faker->addProvider(new ImagesGeneratorProvider($faker));
         $productCategories = DB::table('product_categories')->select('id')->get()->pluck('id')->toArray();
         $malls = DB::table('malls')->select('id')->get()->pluck('id')->toArray();
+        $shops = DB::table('shops')->select('id')->get()->pluck('id')->toArray();
         $data = [];
         for ($i=0; $i < 100; $i++) { 
         	$name = $faker->name;
         	$data[] = [
         		'mall_id' => $malls[rand(0, count($malls) - 1)],
+                'shop_id' => $shops[rand(0, count($shops) - 1)],
         		'product_category_id' => $productCategories[rand(0, count($productCategories) - 1)],
         		'name' => $name,
         		'slug' => str_slug($name),

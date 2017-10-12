@@ -18,7 +18,20 @@ return [
     'fetch_child_product_category' => [
         'parent_id' => 'required'
     ],
+    'fetch_mall' => [
+        'limit' => 'integer'
+    ],
     'fetch_flash_sale' => [
         'limit' => 'integer'
+    ],
+    'fetch_suggest_product' => [
+        'limit'  => 'integer',
+        'offset' => 'integer'
+    ],
+    'fetch_comment' => [
+        'product_id' => 'required|integer',
+        'limit'      => 'integer',
+        'offset'     => 'integer',
+        'parent_id'  => 'integer'
     ]
 ];

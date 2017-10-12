@@ -6,6 +6,15 @@ use Carbon\Carbon;
 
 class SaleDetail extends AbstractModel
 {
+    /**
+     * custom return value image field
+     * @return object
+     */
+    public function getImageAttribute($image)
+    {
+        return json_decode($image)[0]->thumb;
+    }
+
 	/**
 	 * get list flash sale 
 	 * @return array 

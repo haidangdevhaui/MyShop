@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
             if ((new ApiRequestHelper($request))->isApiPrefix()) {
                 Log::useDailyFiles(storage_path().'/logs/api');
                 Log::error($exception);
-                return Response::error(Code::CODE_SERVER_INTERNAL_ERROR, Message::ERROR_SERVER_INTERNAL);
+                return (new Response)->error(Code::CODE_SERVER_INTERNAL_ERROR, Message::ERROR_SERVER_INTERNAL);
             }
         }
         return parent::render($request, $exception);
@@ -72,6 +72,6 @@ class Handler extends ExceptionHandler
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        return Response::error(Code::CODE_AUTH_ERROR, 'You have not...');
+        return (new Response)->error(Code::CODE_AUTH_ERROR, 'You have not...');
     }
 }

@@ -21,7 +21,7 @@ class ApiValidationParamMiddleware
     {
         $api = new ApiRequestHelper($request);
         if ($api->isApiPrefix() && !$api->validate()) {
-            return ApiResponse::error(ApiResponseCode::CODE_PARAMETER_INVALID, Message::ERROR_PARAM_INVALID);
+            return (new ApiResponse)->error(ApiResponseCode::CODE_PARAMETER_INVALID, Message::ERROR_PARAM_INVALID);
         }
         return $next($request);
     }

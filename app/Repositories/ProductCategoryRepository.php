@@ -8,9 +8,9 @@ use App\Repositories\Contracts\ProductCategoryInterface;
 class ProductCategoryRepository extends AbstractRepository implements ProductCategoryInterface
 {
 
-    public function __construct(ProductCategory $product)
+    public function __construct(ProductCategory $category)
     {
-        $this->model = $product;
+        $this->model = $category;
     }
 
 	/**

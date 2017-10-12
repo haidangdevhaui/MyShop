@@ -26,7 +26,8 @@ Route::prefix('v1')->middleware(['param.validate.api'])->group(function () {
      * product api
      */
     Route::prefix('product')->group(function () {
-
+        Route::get('/suggest', 'Api\ProductController@suggest')->name('fetch_suggest_product');
+        Route::get('/detail/{id}', 'Api\ProductController@detail')->name('fetch_detail_product');
     });
 
     /**
@@ -41,6 +42,13 @@ Route::prefix('v1')->middleware(['param.validate.api'])->group(function () {
      */
     Route::prefix('sale')->group(function () {
         Route::get('/', 'Api\SaleController@index')->name('fetch_flash_sale');
+    });
+
+    /**
+     * comment api
+     */
+    Route::prefix('comment')->group(function () {
+        Route::get('/', 'Api\CommentController@index')->name('fetch_comment');
     });
 
     /**

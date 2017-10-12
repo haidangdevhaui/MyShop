@@ -17,6 +17,8 @@ class CreateVotesTable extends Migration
             $table->increments('id');
             $table->integer('mall_id')->unsigned()->nullable();
             $table->foreign('mall_id')->references('id')->on('malls');
+            $table->integer('shop_id')->unsigned()->nullable();
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products');
             $table->double('score')->default(1);

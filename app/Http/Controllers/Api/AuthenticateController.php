@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\ApiController as Api;
+use App\Http\Controllers\AbstractApiController as Api;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Exception, Validator, JWTAuth;
@@ -14,6 +14,15 @@ use App\Helpers\Message;
 class AuthenticateController extends Api
 {
     use AuthenticatesUsers;
+
+    /**
+     * construct
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * login action
      * @param  Request $req
@@ -23,9 +32,9 @@ class AuthenticateController extends Api
     {
         $credentials = $req->input();
         if (!$token = JWTAuth::attempt($credentials)) {
-            return Response::error(Code::CODE_AUTH_EMAIL_OR_PASSWORD_INVAILD, Message::ERROR_EMAIL_OR_PASSWORD_INVALID);
+            return $this->response->error(Code::CODE_AUTH_EMAIL_OR_PASSWORD_INVAILD, Message::ERROR_EMAIL_OR_PASSWORD_INVALID);
         }
-        return Response::success(['api_token' => $token]);
+        return $this->response->success(['api_token' => $token]);
     }
 
     /**

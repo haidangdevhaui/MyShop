@@ -45,7 +45,7 @@ trait ApiTrait
      * @param  string $callback
      * @return mixed
      */
-    final private function map($alias, $param, $callback)
+    private function map($alias, $param, $callback)
     {
         foreach ($param as $arg) {
             if (is_array($arg)) {
@@ -64,7 +64,7 @@ trait ApiTrait
      * @param  string $alias
      * @return mixed
      */
-    final private function instanceClass($className, $alias, $ext = '')
+    private function instanceClass($className, $alias, $ext = '')
     {
         $class            = $alias . $className . $ext;
         if (!class_exists($class)) {
@@ -79,7 +79,7 @@ trait ApiTrait
      * @param  string $alias
      * @return mixed
      */
-    final private function instanceRepo($className, $alias)
+    private function instanceRepo($className, $alias)
     {
         $class            = $alias . $className . 'Repository';
         if (!class_exists($class)) {

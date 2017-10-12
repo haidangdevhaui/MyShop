@@ -12,7 +12,7 @@ class ApiResponse
      * @param  array $data
      * @return json
      */
-    public static function success($data = [])
+    public function success($data = [])
     {
         $response = ['success' => Code::CODE_SUCCESS];
         if ($data) {
@@ -27,7 +27,7 @@ class ApiResponse
      * @param  string $errorMessage
      * @return json
      */
-    public static function error(string $errorCode, string $errorMessage)
+    public function error(string $errorCode, string $errorMessage)
     {
         return Response::json([
             'error_code'    => $errorCode,
